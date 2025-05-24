@@ -5,6 +5,7 @@ import { authentication ,db} from '../../Config/firebaseConfig';
 import {createUserWithEmailAndPassword,} from "firebase/auth"
 import { ToastContainer, toast } from 'react-toastify';
 import {setDoc,doc} from "firebase/firestore"
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [signupDetails, setSignUp] = useState({
@@ -14,6 +15,7 @@ const SignUp = () => {
     role: '',
   });
 
+      const navigate=useNavigate()
   const  handleSubmit = async (e) => {
     e.preventDefault();
     console.log(signupDetails);
@@ -26,6 +28,7 @@ const SignUp = () => {
                 role:signupDetails.role
             })
             toast.success('Sucessfully Registered')
+            navigate('/login')
             
      }catch(err){
         console.log(err)
