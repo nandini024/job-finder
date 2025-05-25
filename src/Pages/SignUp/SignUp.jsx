@@ -28,7 +28,8 @@ const SignUp = () => {
                 role:signupDetails.role
             })
             toast.success('Sucessfully Registered')
-            navigate('/login')
+           
+             navigate('/login'); 
             
      }catch(err){
         console.log(err)

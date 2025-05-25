@@ -70,7 +70,7 @@ function Login() {
             <Form.Group className="mb-3" controlId="formPassword">
               <Form.Label>🔒 Password</Form.Label>
               <Form.Control
-                type="password"
+                type="password"             
                 placeholder="Enter your password"
                 value={loginDetails.password}
                 onChange={(e) =>
