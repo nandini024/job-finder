@@ -23,7 +23,7 @@ function Login() {
         loginDetails.password
       );
       console.log(userLogin);
-       const loginData=await getDoc(doc(db, "users", userLogin.user.uid));
+       const loginData=await getDoc(doc(db, "recruiters", userLogin.user.uid));
        console.log(loginData)
        const loggedUserData=loginData.data()
        console.log(loggedUserData);
@@ -32,11 +32,13 @@ function Login() {
         if(loggedUserData.role=="recruiter")
         {
             // console.log(role);
+            localStorage.setItem("loggedInRecruiter",JSON.stringify(userLogin))
             
             navigate(`/${loggedUserData.role}Dashboard`)
             
         }
         else {
+           localStorage.setItem("loggedInJobseeker",JSON.stringify(userLogin))
             navigate(`/${loggedUserData.role}Dashboard`)
         }
        }

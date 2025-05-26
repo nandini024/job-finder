@@ -22,10 +22,11 @@ const SignUp = () => {
      try{
         const userRegister= await createUserWithEmailAndPassword(authentication,signupDetails.email,signupDetails.password)
             console.log(userRegister);
-            await setDoc(doc(db,"users",userRegister.user.uid),{
+            await setDoc(doc(db,"recruiters",userRegister.user.uid),{
                 email :signupDetails.email,
                 name:signupDetails.name,
-                role:signupDetails.role
+                role:signupDetails.role,
+                id:Date.now()
             })
             toast.success('Sucessfully Registered')
            

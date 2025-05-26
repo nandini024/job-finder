@@ -1,10 +1,11 @@
 
 import React from 'react'
+import Sidebar from './Sidebar'
 
 export default function RecruiterDah() {
   return (
     <div>
-      welcome to Job Recruiter
+      <Sidebar/>
     </div>
   )
 }
