@@ -113,7 +113,7 @@ const SignUp = () => {
         </Form>
 
         <p className="signup-footer">
-          Already have an account? <a href="/login">Login</a>
+          Already have an account? <Link to='/login'>Login</Link>
         </p>
       </Card>
       <ToastContainer />
