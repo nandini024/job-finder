@@ -5,7 +5,7 @@ import { authentication ,db} from '../../Config/firebaseConfig';
 import {createUserWithEmailAndPassword,} from "firebase/auth"
 import { ToastContainer, toast } from 'react-toastify';
 import {setDoc,doc} from "firebase/firestore"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 
 const SignUp = () => {
   const [signupDetails, setSignUp] = useState({
