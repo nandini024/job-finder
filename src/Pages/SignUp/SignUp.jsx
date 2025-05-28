@@ -1,48 +1,48 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Card } from 'react-bootstrap';
-import './SignUp.css';
-import { authentication ,db} from '../../Config/firebaseConfig';
-import {createUserWithEmailAndPassword,} from "firebase/auth"
-import { ToastContainer, toast } from 'react-toastify';
-import {setDoc,doc} from "firebase/firestore"
-import { useNavigate,Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Form, Button, Container, Card } from "react-bootstrap";
+import "./SignUp.css";
+import { authentication, db } from "../../Config/firebaseConfig";
+import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import { setDoc, doc } from "firebase/firestore";
+import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
   const [signupDetails, setSignUp] = useState({
-    name: '',
-    email: '',
-    password: '',
-    role: '',
+    name: "",
+    email: "",
+    password: "",
+    role: "",
   });
 
-      const navigate=useNavigate()
-  const  handleSubmit = async (e) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(signupDetails);
-     try{
-        const userRegister= await createUserWithEmailAndPassword(authentication,signupDetails.email,signupDetails.password)
-            console.log(userRegister);
-            await setDoc(doc(db,"recruiters",userRegister.user.uid),{
-                email :signupDetails.email,
-                name:signupDetails.name,
-                role:signupDetails.role,
-                id:Date.now()
-            })
-            toast.success('Sucessfully Registered')
-           
-             navigate('/login'); 
-            
-     }catch(err){
-        console.log(err)
-        toast.error(err.message)
-        
+    try {
+      const userRegister = await createUserWithEmailAndPassword(
+        authentication,
+        signupDetails.email,
+        signupDetails.password
+      );
 
-     }
+      updateProfile(userRegister.user,{
+        displayName:signupDetails.name
+      })
+      console.log(userRegister);
+      await setDoc(doc(db, `${signupDetails.role}s`, signupDetails.name), {
+        email: signupDetails.email,
+        name: signupDetails.name,
+        role: signupDetails.role,
+        id: Date.now(),
+      });
+      toast.success("Sucessfully Registered");
 
-
-
-
-
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
   };
 
   return (
@@ -99,9 +99,9 @@ const SignUp = () => {
               }
               required
             >
-                              <option value="">choose your role</option>
+              <option value="">choose your role</option>
 
-                              <option value="recruiter">Recruiter</option>
+              <option value="recruiter">Recruiter</option>
               <option value="jobseeker">Job Seeker</option>
             </Form.Select>
           </Form.Group>
@@ -109,11 +109,10 @@ const SignUp = () => {
           <Button variant="primary" type="submit" className="w-100">
             Sign Up
           </Button>
-
         </Form>
 
         <p className="signup-footer">
-          Already have an account? <Link to='/login'>Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </p>
       </Card>
       <ToastContainer />

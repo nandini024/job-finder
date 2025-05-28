@@ -23,25 +23,42 @@ function Login() {
         loginDetails.password
       );
       console.log(userLogin);
-       const loginData=await getDoc(doc(db, "recruiters", userLogin.user.uid));
-       console.log(loginData)
-       const loggedUserData=loginData.data()
-       console.log(loggedUserData);
-       if(loggedUserData && loggedUserData.role)
-       {
-        if(loggedUserData.role=="recruiter")
-        {
-            // console.log(role);
-            localStorage.setItem("loggedInRecruiter",JSON.stringify(userLogin))
-            
+       const recruitersData=await getDoc(doc(db, "recruiters", userLogin.user.displayName)) ;
+       const jobseekersData=await getDoc(doc(db, "jobseekers", userLogin.user.displayName));
+      console.log(recruitersData.data());
+      console.log(jobseekersData.data());
+      let loggedUserData;
+      if(recruitersData.exists()){
+        loggedUserData=recruitersData.data()
+         localStorage.setItem("loggedInRecruiter",JSON.stringify(userLogin))
+         navigate(`/${loggedUserData.role}Dashboard`)
+        console.log(loggedUserData)
+       
+
+
+      }
+      else if(jobseekersData.exists()){
+          loggedUserData=jobseekersData.data()
+          localStorage.setItem("loggedInJobseekers",JSON.stringify(userLogin))
             navigate(`/${loggedUserData.role}Dashboard`)
+
+      }
+
+      //  if(loggedUserData && loggedUserData.role)
+      //  {
+        // if(loggedUserData.role=="recruiter")
+        // {
+        //     // console.log(role);
+        //     localStorage.setItem("loggedInRecruiter",JSON.stringify(userLogin))
             
-        }
-        else {
-           localStorage.setItem("loggedInJobseeker",JSON.stringify(userLogin))
-            navigate(`/${loggedUserData.role}Dashboard`)
-        }
-       }
+        //     navigate(`/${loggedUserData.role}Dashboard`)
+            
+        // }
+        // else {
+        //    localStorage.setItem("loggedInJobseeker",JSON.stringify(userLogin))
+        //     navigate(`/${loggedUserData.role}Dashboard`)
+        // }
+      //  }
        
       toast.success("Sucessfully loggedin");
     } catch (err) {

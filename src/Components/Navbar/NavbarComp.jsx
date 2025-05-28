@@ -7,13 +7,17 @@ import { toast } from "react-toastify";
 
 const NavbarComp = () => {
   const navigate = useNavigate();
-  const loggedinUser = JSON.parse(localStorage.getItem("loggedInRecruiter"));
+  const loggedinUser = JSON.parse(localStorage.getItem("loggedInRecruiter"))||JSON.parse(localStorage.getItem("loggedInJobseekers"));
+  console.log( loggedinUser);
+  
   const logout = async () => {
     const auth = getAuth();
+
 
     try {
       await signOut(auth);
       localStorage.removeItem("loggedInRecruiter");
+       localStorage.removeItem("loggedInJobseekers")
       navigate("/login");
       toast.success("Sucessfully LoggedOut");
     } catch (err) {
@@ -31,10 +35,12 @@ const NavbarComp = () => {
           <Nav className="ms-auto">
             {loggedinUser ? (
               <>
+         <button>{loggedinUser.user.displayName}</button>
                 <button onClick={logout}> logout</button>
               </>
             ) : (
               <>
+
                 <Nav.Link as={Link} to="/signup">
                   Sign Up
                 </Nav.Link>

@@ -7,7 +7,7 @@ export default function JobseekerDashboard() {
   return (
     <div>
       
-  
+  welcome job seeker
     </div>
   )
 }
